@@ -1,4 +1,4 @@
-<div align=center>
+<div align="center">
     <img src="https://s2.loli.net/2024/02/18/mLQZxGjneVrclOg.png" style="width:100px;"/>
     <h2>哎纸娃娃</h2>
 </div> 
