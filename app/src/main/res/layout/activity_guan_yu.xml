@@ -44,7 +44,7 @@
     <TextView
         android:layout_width="300dp"
         android:layout_height="30dp"
-        android:text="★洮羱芝闇★"
+        android:text="tyza66"
         android:gravity="center"
         android:textSize="25sp"
         android:textColor="@color/black"
@@ -61,5 +61,13 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/qq1520600496"
+        />
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:text="版本号：1.0.20250121"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
         />
 </LinearLayout>

@@ -108,7 +108,6 @@ public class MainActivity extends Activity {
                     sendBroadcast(intent);
                 }
             }).start();
-            Toast.makeText(MainActivity.this, "第一次安装或刚刚获取读取权限或意图修复文件时请手动重启一次本程序以获得默认素材包", Toast.LENGTH_LONG).show();
         }
         folder = new File(Environment.getExternalStorageDirectory(), "纸娃娃哎/B2肢体/默认肢体1.png");
         if (!folder.exists()) {
