@@ -2,7 +2,10 @@ package com.ty.zww;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -33,21 +36,21 @@ public class MainActivity extends Activity {
     private static final int ASSETS_SUFFIX_END = 102;
     private static String ASSETS_NAME = "纸娃娃哎/纸娃娃哎.zip";
     private static final int REQUEST_CODE = 1024;
-    private Button bt1,bt2,bt3,bt4;
+    private Button bt1, bt2, bt3, bt4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //申请读写权限
+        // 申请读写权限
         requestPermission();
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.MOUNT_UNMOUNT_FILESYSTEMS}, 1);
-        //控件
+        // 控件
         bt1 = findViewById(R.id.bt_1);
         bt2 = findViewById(R.id.bt_2);
         bt3 = findViewById(R.id.bt_3);
         bt4 = findViewById(R.id.bt_4);
-        //点击事件
+        // 点击事件
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,48 +80,79 @@ public class MainActivity extends Activity {
             }
         });
 
-        //文件夹事件
+        // 注册广播接收器
+        IntentFilter filter = new IntentFilter("com.ty.zww.FILE_COPY_COMPLETE");
+        registerReceiver(fileCopyCompleteReceiver, filter);
 
+        // 文件夹事件
+        checkAndCopyFiles();
+    }
+
+    private BroadcastReceiver fileCopyCompleteReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 重新加载资源
+            checkAndCopyFiles();
+        }
+    };
+
+    private void checkAndCopyFiles() {
         File folder = new File(Environment.getExternalStorageDirectory(), "纸娃娃哎");
         if (!folder.exists()) {
-            new Thread(new Runnable(){
-            @Override
-            public void run(){
-            FileUtils1.getInstance(getApplicationContext()).copyAssetsToSD("纸娃娃哎","纸娃娃哎");
-            }
-        }).start();
-            Toast.makeText(MainActivity.this,"第一次安装或刚刚获取读取权限或意图修复文件时请手动重启一次本程序以获得默认素材包",Toast.LENGTH_LONG).show();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    FileUtils1.getInstance(getApplicationContext()).copyAssetsToSD("纸娃娃哎", "纸娃娃哎");
+                    // 发送广播
+                    Intent intent = new Intent("com.ty.zww.FILE_COPY_COMPLETE");
+                    sendBroadcast(intent);
+                }
+            }).start();
+            Toast.makeText(MainActivity.this, "第一次安装或刚刚获取读取权限或意图修复文件时请手动重启一次本程序以获得默认素材包", Toast.LENGTH_LONG).show();
         }
         folder = new File(Environment.getExternalStorageDirectory(), "纸娃娃哎/B2肢体/默认肢体1.png");
         if (!folder.exists()) {
-            new Thread(new Runnable(){
+            new Thread(new Runnable() {
                 @Override
-                public void run(){
-                    FileUtils1.getInstance(getApplicationContext()).copyAssetsToSD("纸娃娃哎","纸娃娃哎");
+                public void run() {
+                    FileUtils1.getInstance(getApplicationContext()).copyAssetsToSD("纸娃娃哎", "纸娃娃哎");
+                    // 发送广播
+                    Intent intent = new Intent("com.ty.zww.FILE_COPY_COMPLETE");
+                    sendBroadcast(intent);
                 }
             }).start();
         }
         folder = new File(Environment.getExternalStorageDirectory(), "纸娃娃哎/G7眼镜/默认眼睛1.png");
         if (!folder.exists()) {
-            new Thread(new Runnable(){
+            new Thread(new Runnable() {
                 @Override
-                public void run(){
-                    FileUtils1.getInstance(getApplicationContext()).copyAssetsToSD("纸娃娃哎/G7眼镜","纸娃娃哎/G7眼镜");
+                public void run() {
+                    FileUtils1.getInstance(getApplicationContext()).copyAssetsToSD("纸娃娃哎/G7眼镜", "纸娃娃哎/G7眼镜");
+                    // 发送广播
+                    Intent intent = new Intent("com.ty.zww.FILE_COPY_COMPLETE");
+                    sendBroadcast(intent);
                 }
-
             }).start();
         }
     }
-    private boolean copyFile(String oldPath,String newPath){
-        try{
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 注销广播接收器
+        unregisterReceiver(fileCopyCompleteReceiver);
+    }
+
+    private boolean copyFile(String oldPath, String newPath) {
+        try {
             int bytesum = 0;
             int byteread = 0;
             String new_e = "";
             File old_e = new File(oldPath);
-            if(newPath.endsWith(File.separator)){
-                new_e = newPath+old_e.getName();
-            }else{
-                new_e = newPath+File.separator+old_e.getName();
+            if (newPath.endsWith(File.separator)) {
+                new_e = newPath + old_e.getName();
+            } else {
+                new_e = newPath + File.separator + old_e.getName();
             }
             new File(newPath).mkdirs();
             try {
@@ -140,14 +174,14 @@ public class MainActivity extends Activity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
         return true;
-        }
-        private byte[] InputStreamToByte(InputStream is) throws IOException {
+    }
+
+    private byte[] InputStreamToByte(InputStream is) throws IOException {
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         int ch;
         while ((ch = is.read()) != -1) {
@@ -189,7 +223,7 @@ public class MainActivity extends Activity {
                     ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 writeFile();
             } else {
-                Toast.makeText(MainActivity.this,"存储权限获取失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "存储权限获取失败", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -201,7 +235,7 @@ public class MainActivity extends Activity {
             if (Environment.isExternalStorageManager()) {
                 writeFile();
             } else {
-                Toast.makeText(MainActivity.this,"存储权限获取失败",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "存储权限获取失败", Toast.LENGTH_LONG).show();
             }
         }
     }
