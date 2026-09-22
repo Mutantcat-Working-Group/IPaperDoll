@@ -33,6 +33,8 @@ jobs:
           cp app/build/outputs/apk/release/*.apk dist/
           cd dist
           sha256sum -- * > SHA256SUMS
+          md5sum -- * > checksums-md5.txt
+          sha1sum -- * > checksums-sha1.txt
 
       - name: Create or update release
         env:
