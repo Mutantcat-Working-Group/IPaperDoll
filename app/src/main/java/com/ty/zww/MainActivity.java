@@ -1,3 +1,5 @@
+// 哎纸娃娃 — 由异猫工作群（mutantcat.org）发行
+// GitHub: https://github.com/Mutantcat-Working-Group
 package com.ty.zww;
 
 import android.Manifest;
