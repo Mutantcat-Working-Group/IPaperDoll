@@ -3,12 +3,15 @@
     <h2>哎纸娃娃</h2>
 </div> 
 
+[项目仓库](https://github.com/Mutantcat-Working-Group/IPaperDoll) · [下载安装包](https://github.com/Mutantcat-Working-Group/IPaperDoll/releases) · [问题反馈](https://github.com/Mutantcat-Working-Group/IPaperDoll/issues)
+
 ### 一、产品概述
 
 - 安卓手机上的纸娃娃软件，用来生成游戏素材与人物行走图。
 - 可自行导入素材进行纸娃娃合成，玩法与 PC 版纸娃娃软件（含 RPG 引擎内置编辑器）一致。
 - 简单点击即可操作，兼容网络常见的 128*192 像素、以及同比例缩放的 4*4 规格纸娃娃行走图素材。
 - 部件随意混搭，一键保存成品。
+- **发行方** 由异猫工作群（mutantcat.org）发行，GitHub: https://github.com/Mutantcat-Working-Group
 
 核心价值：把纸娃娃合成搬进口袋，随时随地把素材拼成可用的人物行走图。
 
@@ -45,6 +48,12 @@
 3. 进入纸娃娃界面点选部件进行混搭，或点随机快速组合。
 4. 点击构建生成行走图，在 A1 文件夹查看成品；点预览回看上一组。
 
-### 六、开源协议与致谢
+### 六、开源协议
 
-本项目基于 Apache-2.0 协议开源。本项目是 [tyza66/IPaperDoll](https://github.com/tyza66/IPaperDoll) 的 Fork，感谢原仓库及其作者的优秀开源工作，本仓库在其基础上继续维护与改进。
+本项目基于 Apache-2.0 协议开源，许可证见 [LICENSE.txt](LICENSE.txt)。
+
+---
+
+## 致谢
+
+本项目是 [tyza66/IPaperDoll](https://github.com/tyza66/IPaperDoll) 的 Fork，感谢原仓库及其作者的优秀开源工作，本仓库在其基础上继续维护与改进。
